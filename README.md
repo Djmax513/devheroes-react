@@ -1,6 +1,6 @@
 # Instaling and Running
 
-To run this project you just need to run `npm install` to install all recat-native + expo dependencies
+To run this project you just need to run `npm install` to install all react-native + expo dependencies
 
 After, you simply run `expo start` to run the expo setup
 
