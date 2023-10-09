@@ -46,6 +46,7 @@ export default function Routes() {
             <Stack.Screen
                 name="LoginPage"
                 component={LoginPage}
+                options={{headerShown: false}}
             />
             <Stack.Screen
                 name="HomePage"
