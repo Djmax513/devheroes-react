@@ -6,6 +6,9 @@ import LoginPage from "../pages/Login";
 import HomePage from "../pages/Home";
 import ProfilePage from "../pages/Profile";
 import HistoryPage from "../pages/History";
+import RegisterPage from "../pages/Register";
+
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -49,8 +52,13 @@ export default function Routes() {
                 options={{headerShown: false}}
             />
             <Stack.Screen
-                name="HomePage"
+                name="HomePages"
                 component={TabNavigation}
+            />
+            <Stack.Screen
+                name="RegisterPage"
+                component={RegisterPage}
+                options={{headerShown: false}}
             />
         </Stack.Navigator>
     )
