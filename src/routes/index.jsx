@@ -6,6 +6,9 @@ import LoginPage from "../pages/Login";
 import HomePage from "../pages/Home";
 import ProfilePage from "../pages/Profile";
 import HistoryPage from "../pages/History";
+import RegisterPage from "../pages/Register";
+
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();

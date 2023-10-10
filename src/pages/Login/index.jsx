@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, Button, TextInput, StyleSheet, TouchableOpacity, Image, KeyboardAvoidingView } from 'react-native'
 import { useNavigation } from "@react-navigation/native"
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 export default function LoginPage() {
+    const [error, setError] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [formData, setFormData] = useState({
+        email: "",
+        password: ""
+    }) 
     const navigation = useNavigation()
     const styles = StyleSheet.create({
         input: {
@@ -58,12 +65,32 @@ export default function LoginPage() {
             marginTop: 10,
             fontSize: 15,
             textDecorationLine: "underline"
-            
+        },
+        inputError: {
+            borderWidth: 2,
+            borderColor: "red",
+        },
+        errorMessage: {
+            marginBottom: 15,
+            marginTop: -8,
+            color: "red"
         }
       });
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
+        setLoading(true);
 
+        const loggedUser = await AsyncStorage.getItem("user");
+        const cleanUser = JSON.parse(loggedUser);
+        if (cleanUser?.email === formData?.email) {
+            if (cleanUser?.password === formData?.password) {
+                setError(false);
+                navigation.navigate('HomePages')
+            }
+        } 
+
+        setError(true);
+        setLoading(false);
     }
 
     return (
@@ -75,16 +102,17 @@ export default function LoginPage() {
             </View>
             <View style={styles.formContainer}>
                 <Text style={styles.label}>Faça seu Login</Text>
-                <TextInput placeholder="Usuário" style={styles.input}/>
-                <TextInput placeholder="Senha" style={styles.input}/>
-                <TouchableOpacity style={styles.formButton}>
+                <TextInput placeholder="E-mail" style={[styles.input, error ? styles.inputError : null]} value={formData?.email} onChangeText={(text) => setFormData({...formData, email: text})}/>
+                <TextInput placeholder="Senha" style={[styles.input, error ? styles.inputError : null]} secureTextEntry={true} value={formData?.password} onChangeText={(text) => setFormData({...formData, password: text})}/>
+                {error ? <Text style={styles.errorMessage}>E-mail ou senha errados</Text> : null}
+                <TouchableOpacity style={styles.formButton} onPress={() => handleLogin()} disabled={loading}>
                     <Text style={styles.buttonText}>Entrar</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('HomePage')} >
+                <TouchableOpacity onPress={() => navigation.navigate('RegisterPage')} >
                     <Text style={styles.textLink}>Cadastrar-se</Text>
                 </TouchableOpacity>
             </View>
-            <Button title="Provisorio (faz login)" onPress={() => navigation.navigate('HomePage')}/>
+            <View />
         </KeyboardAvoidingView>
     );
 }
