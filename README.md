@@ -20,4 +20,3 @@ Install the **Expo Go** App in App Store or Google Play Store and scan the qr-co
 
 - React native - Linguagem de programação
 - Visual Studio Code - IDE
-- React Hook Form - é uma biblioteca para gerenciamento de formulários em aplicações React
