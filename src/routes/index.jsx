@@ -12,28 +12,34 @@ const Stack = createNativeStackNavigator();
 
 function TabNavigation() {
     return (
-        <Tab.Navigator screenOptions={{
-            tabBarActiveTintColor: "blue"
-        }}>
+        <Tab.Navigator
+            initialRouteName="HomePage"
+            screenOptions={{
+                tabBarActiveTintColor: "#643ca3",
+                headerShown: false,
+                tabBarShowLabel: false,
+                tabBarStyle: { height: 70 },
+            }}
+        >
             <Tab.Screen
                 name="HistoryPage"
                 component={HistoryPage}
                 options={{
-                    tabBarIcon: ({ size, color }) => <MaterialCommunityIcons  name="clock-time-five-outline" size={size} color={color} />,
+                    tabBarIcon: ({ size, color }) => <MaterialCommunityIcons  name="clock-time-five-outline" size={size} color={color} />
                 }}
             />
             <Tab.Screen
                 name="HomePage"
                 component={HomePage}
                 options={{
-                    tabBarIcon: ({ size, color }) => <Octicons name="home" size={size} color={color} />,
+                    tabBarIcon: ({ size, color }) => <Octicons name="home" size={size} color={color} />
                 }}
             />
             <Tab.Screen
                 name="ProfilePage"
                 component={ProfilePage}
                 options={{
-                    tabBarIcon: ({ size, color }) => <FontAwesome5 name="user" size={size} color={color} />,
+                    tabBarIcon: ({ size, color }) => <FontAwesome5 name="user" size={size} color={color} />
                 }}
             />
         </Tab.Navigator>
@@ -44,12 +50,14 @@ export default function Routes() {
     return (
         <Stack.Navigator >
             <Stack.Screen
-                name="LoginPage"
-                component={LoginPage}
+                name="General"
+                component={TabNavigation}
+                options={{headerShown: false}}
             />
             <Stack.Screen
-                name="HomePage"
-                component={TabNavigation}
+                name="LoginPage"
+                component={LoginPage}
+                options={{headerShown: false}}
             />
         </Stack.Navigator>
     )
