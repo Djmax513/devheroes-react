@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native"
 import { Controller, useForm } from "react-hook-form";
 import { MaskedTextInput} from "react-native-mask-text";
 import { SafeAreaView } from "react-native-safe-area-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function RegisterPage() {
     const navigation = useNavigation()
