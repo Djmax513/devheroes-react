@@ -6,7 +6,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function LoginPage() {
     const [error, setError] = useState(false)
-    const [loading, setLoading] = useState(false)
     const [formData, setFormData] = useState({
         email: "",
         password: ""
@@ -78,7 +77,6 @@ export default function LoginPage() {
       });
 
     const handleLogin = async () => {
-        setLoading(true);
 
         const loggedUser = await AsyncStorage.getItem("user");
         const cleanUser = JSON.parse(loggedUser);
@@ -86,11 +84,12 @@ export default function LoginPage() {
             if (cleanUser?.password === formData?.password) {
                 setError(false);
                 navigation.navigate('HomePages')
+                return;
             }
         } 
 
-        setError(true);
-        setLoading(false);
+        setError(false);
+        return;
     }
 
     return (
@@ -105,14 +104,14 @@ export default function LoginPage() {
                 <TextInput placeholder="E-mail" style={[styles.input, error ? styles.inputError : null]} value={formData?.email} onChangeText={(text) => setFormData({...formData, email: text})}/>
                 <TextInput placeholder="Senha" style={[styles.input, error ? styles.inputError : null]} secureTextEntry={true} value={formData?.password} onChangeText={(text) => setFormData({...formData, password: text})}/>
                 {error ? <Text style={styles.errorMessage}>E-mail ou senha errados</Text> : null}
-                <TouchableOpacity style={styles.formButton} onPress={() => handleLogin()} disabled={loading}>
+                <TouchableOpacity style={styles.formButton} onPress={handleLogin}>
                     <Text style={styles.buttonText}>Entrar</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation.navigate('RegisterPage')} >
                     <Text style={styles.textLink}>Cadastrar-se</Text>
                 </TouchableOpacity>
             </View>
-            <View />
+            <View/>
         </KeyboardAvoidingView>
     );
 }
