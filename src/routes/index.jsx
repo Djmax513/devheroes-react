@@ -51,7 +51,7 @@ function TabNavigation() {
 
 export default function Routes() {
     return (
-        <Stack.Navigator >
+        <Stack.Navigator>
             <Stack.Screen
                 name="General"
                 component={TabNavigation}
@@ -60,6 +60,11 @@ export default function Routes() {
             <Stack.Screen
                 name="LoginPage"
                 component={LoginPage}
+                options={{headerShown: false}}
+            />
+            <Stack.Screen
+                name="RegisterPage"
+                component={RegisterPage}
                 options={{headerShown: false}}
             />
         </Stack.Navigator>

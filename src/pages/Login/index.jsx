@@ -85,7 +85,7 @@ export default function LoginPage() {
         if (cleanUser?.email === formData?.email) {
             if (cleanUser?.password === formData?.password) {
                 setError(false);
-                navigation.navigate('HomePages')
+                navigation.navigate('General')
             }
         } 
 
