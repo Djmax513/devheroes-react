@@ -16,20 +16,19 @@ export default function HomePage() {
     const [location, setLocation] = useState(null);
     const [destination, setDestination] = useState(null);
     const [origin, setOrigin] = useState(null);
-    const [mapView, setMapView] = useState();
 
     const map = useRef();
 
     async function fitMapToDirections() {
         map.current.fitToCoordinates([
+            origin,
             destination,
-            origin
         ], {
             edgePadding: {
               top: 20,
-              right: 20,
-              bottom: 20,
-              left: 20,
+              right: 50,
+              bottom: 200,
+              left: 50,
             },
           });
     }
@@ -59,19 +58,19 @@ export default function HomePage() {
                     latitudeDelta: 0.005,
                     longitudeDelta: 0.005
                 });
-                setOrigin({
-                    latitude: response.coords.latitude,
-                    longitude: response.coords.longitude,
-                })
             }
         );
     }, []);
+
+    useEffect(() => {
+        setOrigin(location)
+    }, [destination]);
 
     return (
         <View>
         {location !== null && (
             <MapView
-            style={{width: "100%", height: "100%"}}
+                style={{width: "100%", height: "100%"}}
                 initialRegion={location}
                 loadingEnabled
                 showsUserLocation
@@ -79,7 +78,7 @@ export default function HomePage() {
                 showsMyLocationButton={false}
                 showsCompass={false}
                 ref={map}
-                >
+            >
                 {destination !== null && (
                     <>
                         <MapViewDirections
@@ -99,9 +98,9 @@ export default function HomePage() {
             <SearchAutocomplete setDestination={setDestination} />
             {destination !== null && (
                 <>
+                    <RaceDetails />
                 </>
             )}
-            <RaceDetails />
         </View>
     );
 }

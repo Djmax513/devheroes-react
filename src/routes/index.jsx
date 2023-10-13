@@ -23,6 +23,9 @@ function TabNavigation() {
                 tabBarShowLabel: false,
                 tabBarStyle: { height: 70 },
             }}
+            tabBarOptions={{
+                keyboardHidesTabBar: true
+            }}
         >
             <Tab.Screen
                 name="HistoryPage"
@@ -53,13 +56,13 @@ export default function Routes() {
     return (
         <Stack.Navigator>
             <Stack.Screen
-                name="General"
-                component={TabNavigation}
+                name="LoginPage"
+                component={LoginPage}
                 options={{headerShown: false}}
             />
             <Stack.Screen
-                name="LoginPage"
-                component={LoginPage}
+                name="General"
+                component={TabNavigation}
                 options={{headerShown: false}}
             />
             <Stack.Screen

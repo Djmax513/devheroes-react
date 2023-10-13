@@ -1,5 +1,5 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View, Keyboard } from "react-native";
 import { Box, Button, Image, Center, Pressable, Flex, Text, Stack, VStack, HStack } from "native-base";
 
 const carOptionsArray = [
@@ -33,37 +33,59 @@ function CarOptions ({ optionName, optionPrice, imageSrc }) {
 }
 
 export default function RaceDetails() {
-    return (
-        <View style={styles.detailsContainer}>
-            <Center my={4}>
-                <Text fontSize='xl' fontWeight={700}>Resumo da Corrida</Text>
-                <HStack mt={5} justifyContent={'center'} alignItems={'center'}>
-                    {carOptionsArray.map((i) => {
-                        return (
-                            <CarOptions optionName={i.optionName} optionPrice={i.optionPrice} imageSrc={i.imageSrc}/>
-                            )
-                        })}
-                </HStack>
-                <Pressable textAlign={'center'} bg={'black'} mx={'auto'} w={'80%'} mt={5} borderRadius={7}>
-                    {/* <Text mx={'auto'} fontSize={18} color={'white'} p={3}>Confirmar Corrida</Text> */}
-                    <Button height={46}>Confirmar Corrida</Button>
-                </Pressable>
-            </Center>
-        </View>
-    )
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => setKeyboardVisible(true)
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => setKeyboardVisible(false)
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+
+  return (
+    <View style={styles.detailsContainer}>
+      {!keyboardVisible && (
+        <Center my={4}>
+          <Text fontSize="xl" fontWeight={700}>
+            Resumo da Corrida
+          </Text>
+          <HStack mt={5} justifyContent={"center"} alignItems={"center"}>
+            {carOptionsArray.map((i, index) => (
+              <CarOptions
+                key={index}
+                optionName={i.optionName}
+                optionPrice={i.optionPrice}
+                imageSrc={i.imageSrc}
+              />
+            ))}
+          </HStack>
+          <Pressable textAlign={"center"} bg={"black"} mx={"auto"} w={"80%"} mt={5} borderRadius={7}>
+            <Button height={46}>Confirmar Corrida</Button>
+          </Pressable>
+        </Center>
+      )}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    detailsContainer: {
-        position: 'absolute',
-        elevation: 10,
-        bottom: 0,
-        left: 0,
-        backgroundColor: 'white',
-        // borderTopEndRadius: 20,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        width: '100%',
-    },
-    
+  detailsContainer: {
+    position: "absolute",
+    elevation: 10,
+    bottom: 0,
+    left: 0,
+    backgroundColor: "white",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    width: "100%",
+  },
 });

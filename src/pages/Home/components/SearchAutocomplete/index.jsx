@@ -11,7 +11,6 @@ export default function SearchAutocomplete({ setDestination }) {
             placeholder="Procure pelo seu destino"
             placeholderTextColor="#333"
             onPress={(data, details) => {
-                console.log("@search response", data, details)
                 setDestination({
                     latitude: details.geometry.location.lat,
                     longitude: details.geometry.location.lng,
